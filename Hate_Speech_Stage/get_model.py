@@ -124,23 +124,6 @@ def generate_model():
     model_filename = 'hate_speech_model.sav'
     pickle.dump(prediction_model, open(model_filename, 'wb'))
 
-
-
-# return prediction on data using model
-def get_prediction(input_data, model):
-    input_data = preprocess(input_data)
-    input_data = tf.expand_dims(input_data, -1)
-    return model.predict(input_data)
-
-def predict(input_data):
-
-    # load model
-    model = pickle.load(open('hate_speech_model.sav', 'rb'))
-
-    # return prediction
-    return get_prediction(input_data, model)
-
-
 # start
 if __name__ == "__main__":
     main()

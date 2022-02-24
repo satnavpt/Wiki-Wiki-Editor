@@ -1,7 +1,8 @@
 import re
 import nltk
-nltk.download('stopwords')
+nltk.download('stopwords', quiet = True)
 from nltk.corpus import stopwords as stop
+nltk.download('punkt', quiet = True)
 
 
 # preprocess training text
@@ -34,11 +35,8 @@ def preprocess_training(text):
 
 # split input into sentences (needs work)
 def sentence_split(sample):
-    sentences = []
     text = sample[1]
-    if len(text) > 100:
-        for i in range(0, len(text), 100):
-            sentences.append(text[i:i+100])
+    sentences = nltk.tokenize.sent_tokenize(text)
     return sentences
 
 # preprocess prediction text

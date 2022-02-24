@@ -10,11 +10,14 @@ def predict(input_data):
     model = pickle.load(open('hate_speech_model.sav', 'rb'))
 
     # apply preprocessing
-    input_data = pp.preprocess(input_data)
-    input_data = tf.expand_dims(input_data, -1)
+    input_data_list = pp.preprocess_prediction(input_data)
+    input_data_list = [tf.expand_dims(sentence, -1) for sentence in input_data_list]
 
     # get prediction
-    prediction = predict(input_data)
+    output = []
+    for data in input_data_list:
+        prediction = model.predict(data)
+        output.append((prediction, data))
 
-    # return prediction
-    return prediction
+    # return predictions and associated data
+    return output

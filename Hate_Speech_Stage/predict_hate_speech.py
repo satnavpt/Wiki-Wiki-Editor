@@ -31,6 +31,6 @@ def contains_hate_speech(input):
     predictions = predict(input)
     problems = []
     for prediction in predictions:
-        if prediction[0] > cutoff
+        if prediction[0] > cutoff:
             problems.append(prediction[1])
     return problems

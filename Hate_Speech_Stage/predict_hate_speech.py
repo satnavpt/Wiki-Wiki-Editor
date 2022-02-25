@@ -2,6 +2,9 @@ import tensorflow as tf
 import preprocessing as pp
 import pickle
 
+# constants
+cutoff = 0.8
+
 
 # get and return prediction
 def predict(input_data):
@@ -21,3 +24,13 @@ def predict(input_data):
 
     # return predictions and associated data
     return output
+
+
+# return any sentences with high predicted hate speech
+def contains_hate_speech(input):
+    predictions = predict(input)
+    problems = []
+    for prediction in predictions:
+        if prediction[0] > cutoff
+            problems.append(prediction[1])
+    return problems

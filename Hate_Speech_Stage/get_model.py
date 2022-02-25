@@ -17,9 +17,9 @@ from sklearn.model_selection import train_test_split
 
 # program constants
     ### NEEDS FINE TUNING ###
-MAX_FEATURES = 10000
-SEQUENCE_LENGTH = 200
-EMBEDDING_DIM = 32
+MAX_FEATURES = 12000
+SEQUENCE_LENGTH = 150
+EMBEDDING_DIM = 64
 
 # global vectorizer
 vectorizer = None
@@ -83,7 +83,7 @@ def generate_model():
     data['hate_speech_score']  = (data['hate_speech_score'] > 0).astype(int)
 
     # applying preprocessing
-    data['text'] = data['text'].apply(lambda x : pp.preprocess(x))
+    data['text'] = data['text'].apply(lambda x : pp.preprocess_training(x))
 
     # split into training and testing sets
     data_train, data_test = train_test_split(data, test_size = 0.2, random_state = 1)

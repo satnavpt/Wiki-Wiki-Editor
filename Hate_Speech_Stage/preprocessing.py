@@ -42,5 +42,5 @@ def sentence_split(sample):
 # preprocess prediction text
 def preprocess_prediction(text):
     sentences = sentence_split(text)
-    sentences = [preprocess_training(sentence) for sentence in sentences]
-    return sentences
+    processed_sentences = [preprocess_training(sentence) for sentence in sentences]
+    return processed_sentences, sentences

@@ -1,3 +1,5 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
 import preprocessing as pp
 import pickle
@@ -30,7 +32,3 @@ def predict(input_data):
 def contains_hate_speech(input):
     predictions = predict(input)
     return [error_message + '"' + prediction[1] + '"' for prediction in predictions if prediction[0] > cutoff]
-
-
-
-

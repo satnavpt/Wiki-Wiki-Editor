@@ -8,12 +8,17 @@ import pickle
 cutoff = 0.6
 error_message = "This sentence seems to contain hateful content, consider changing it: "
 
+# global model
+model = None
+
+# load model
+def load_model():
+    global model
+    model = pickle.load(open('hate_speech_model.sav', 'rb'))
 
 # get and return prediction
 def predict(input_data):
-
-    # load model
-    model = pickle.load(open('hate_speech_model.sav', 'rb'))
+    global model
 
     # apply preprocessing
     input_data_list, sentences = pp.preprocess_prediction(input_data)

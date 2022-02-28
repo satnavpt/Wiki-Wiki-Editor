@@ -18,10 +18,8 @@ def predict(input_data):
 
     # get prediction
     output = []
-    for data in input_data_list:
-        prediction = model.predict(data)
-        output.append((prediction, data))
-
+    output = map(lambda x: (model.predict(x), x), input_data_list)
+    
     # return predictions and associated data
     return output
 
@@ -29,8 +27,8 @@ def predict(input_data):
 # return any sentences with high predicted hate speech
 def contains_hate_speech(input):
     predictions = predict(input)
-    problems = []
-    for prediction in predictions:
-        if prediction[0] > cutoff:
-            problems.append(prediction[1])
-    return problems
+
+    return [prediction[1] for prediction in predictions if prediction[0] > cutoff]
+
+
+

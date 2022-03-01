@@ -26,7 +26,6 @@ def predict(input_data):
     input_data_list = zip(input_data_list, sentences)
 
     # get prediction
-    output = []
     output = map(lambda x: (model.predict(x[0]), x[1]), input_data_list)
     
     # return predictions and associated data

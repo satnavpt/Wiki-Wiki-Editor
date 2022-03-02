@@ -1,7 +1,16 @@
 from flask import Flask
 from flask import request
+from flask_cors import CORS
+import main_pipeline
+import sentence_coherence
+import multiprocessing
 
 app = Flask(__name__)
+CORS(app)
+
+@app.before_first_request
+def init_pipeline():
+    main_pipeline.init_pipeline()
 
 @app.route("/", methods=["POST"])
 def json_example():
@@ -13,8 +22,13 @@ def json_example():
         return "Request was not JSON", 400
 
 def getResponse(data):
-    return getCharCount(data["text"])
+    if len(data['text']) == 0:
+        return []
+    return getPipeline(data)
 
 # example processing of article data
 def getCharCount(data):
     return "received " + str(len(data)) + " characters"
+
+def getPipeline(data):
+    return main_pipeline.run_pipeline(data['text'], data['original_text'])

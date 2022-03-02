@@ -121,8 +121,9 @@ def generate_model():
     )
 
     # save model
-    model_filename = 'hate_speech_model.sav'
-    pickle.dump(prediction_model, open(model_filename, 'wb'))
+    model_filename = '/home/ethan/wiki-wiki-editor-1'
+    model_save_options = tf.saved_model.SaveOptions(experimental_io_device="/job:localhost")
+    prediction_model.save(model_filename, options = model_save_options)
 
 # start
 if __name__ == "__main__":

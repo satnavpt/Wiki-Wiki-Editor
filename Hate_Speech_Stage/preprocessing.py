@@ -34,13 +34,12 @@ def preprocess_training(text):
 
 
 # split input into sentences (needs work)
-def sentence_split(sample):
-    text = sample[1]
+def sentence_split(text):
     sentences = nltk.tokenize.sent_tokenize(text)
     return sentences
 
 # preprocess prediction text
 def preprocess_prediction(text):
     sentences = sentence_split(text)
-    sentences = [preprocess_training(sentence) for sentence in sentences]
-    return sentences
+    processed_sentences = [preprocess_training(sentence) for sentence in sentences]
+    return processed_sentences, sentences

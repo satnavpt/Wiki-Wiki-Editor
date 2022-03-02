@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = {
       articleName: "",
       articleText: "",
+      originalText: "",
       feedback: "",
     };
 
@@ -44,7 +45,19 @@ class App extends React.Component {
       soup.findAll("p").forEach((p) => {
         text += p.text;
       });
+      const regex1 = /&#\d+;\w*&#\d+;/g;
+      const regex2 = /&#\d+;/g;
+      const regex3 = /\s+/g;
+      const regex4 = /(\D)[.](\D)/g;
+      // remove all the &#.. added in the article
+      text = text.replaceAll(regex1, ' ');
+      text = text.replaceAll(regex2, '');
+      text = text.replaceAll(regex4, '$1. $2');
+      text = text.replaceAll(regex3, ' ');
+      text = text.replaceAll("clarification needed", "");
+      text = text.replaceAll("citation needed", "");
       this.setState({ articleText: text });
+      this.setState({ originalText: text });
     });
 
     event.preventDefault();
@@ -56,6 +69,7 @@ class App extends React.Component {
 
   handleArticleSubmit(event) {
     var editText = this.state.articleText;
+    var originalText = this.state.originalText;
 
     var xhr = new XMLHttpRequest();
     var url = "http://127.0.0.1:5000/";
@@ -67,7 +81,7 @@ class App extends React.Component {
         this.setState({ feedback: responseData["feedback"] });
       }
     };
-    var requestData = JSON.stringify({ text: editText });
+    var requestData = JSON.stringify({ text: editText , original_text : originalText });
     xhr.send(requestData);
 
     event.preventDefault();

@@ -25,9 +25,5 @@ def getResponse(data):
         return []
     return getPipeline(data)
 
-# example processing of article data
-def getCharCount(data):
-    return "received " + str(len(data)) + " characters"
-
 def getPipeline(data):
     return main_pipeline.run_pipeline(data['text'], data['original_text'], data['language'])

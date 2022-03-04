@@ -1,8 +1,6 @@
 import nltk
 import pickle
 import glob
-import wikipedia
-from bs4 import BeautifulSoup
 
 def add_new_dict(bigram_path, main_bigram_dict):
     with open(bigram_path, "rb") as to_add:

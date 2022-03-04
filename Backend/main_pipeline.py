@@ -24,7 +24,7 @@ def init_pipeline():
 
 # text is the user input and force_down_pipeline is a setting that should be off by default
 # when on it will push the text down the pipeline regardless if errors are detected
-def run_pipeline(changed_text, original_text):
+def run_pipeline(changed_text, original_text, language):
 
     problems_detected = []
 

@@ -11,6 +11,7 @@ class App extends React.Component {
       articleName: "",
       articleText: "",
       originalText: "",
+      language: "en-gb",
       feedback: "",
     };
 
@@ -18,6 +19,7 @@ class App extends React.Component {
     this.handleArticleSubmit = this.handleArticleSubmit.bind(this);
     this.handleArticleNameTyping = this.handleArticleNameTyping.bind(this);
     this.handleArticleNameSubmit = this.handleArticleNameSubmit.bind(this);
+    this.handleLanguageChange = this.handleLanguageChange.bind(this);
   }
 
   handleArticleNameTyping(event) {
@@ -50,10 +52,10 @@ class App extends React.Component {
       const regex3 = /\s+/g;
       const regex4 = /(\D)[.](\D)/g;
       // remove all the &#.. added in the article
-      text = text.replaceAll(regex1, ' ');
-      text = text.replaceAll(regex2, '');
-      text = text.replaceAll(regex4, '$1. $2');
-      text = text.replaceAll(regex3, ' ');
+      text = text.replaceAll(regex1, " ");
+      text = text.replaceAll(regex2, "");
+      text = text.replaceAll(regex4, "$1. $2");
+      text = text.replaceAll(regex3, " ");
       text = text.replaceAll("clarification needed", "");
       text = text.replaceAll("citation needed", "");
       this.setState({ articleText: text });
@@ -67,9 +69,14 @@ class App extends React.Component {
     this.setState({ articleText: event.target.value });
   }
 
+  handleLanguageChange(event) {
+    this.setState({ language: event.target.value });
+  }
+
   handleArticleSubmit(event) {
     var editText = this.state.articleText;
     var originalText = this.state.originalText;
+    var lang = this.state.language;
 
     var xhr = new XMLHttpRequest();
     var url = "http://127.0.0.1:5000/";
@@ -81,7 +88,11 @@ class App extends React.Component {
         this.setState({ feedback: responseData["feedback"] });
       }
     };
-    var requestData = JSON.stringify({ text: editText , original_text : originalText });
+    var requestData = JSON.stringify({
+      text: editText,
+      original_text: originalText,
+      language: lang,
+    });
     xhr.send(requestData);
 
     event.preventDefault();
@@ -124,6 +135,29 @@ class App extends React.Component {
                       value={this.state.articleText}
                       onChange={this.handleArticleTyping}
                     />
+                    <div key={`inline-radio`} className="mb-3">
+                      <Form.Check
+                        inline
+                        // checked
+                        label="English (UK)"
+                        name="language"
+                        type={"radio"}
+                        id={`inline-radio-1`}
+                        value="en-gb"
+                        onChange={this.handleLanguageChange}
+                        checked={this.state.language === "en-gb"}
+                      />
+                      <Form.Check
+                        inline
+                        label="English (US)"
+                        name="language"
+                        type={"radio"}
+                        id={`inline-radio-2`}
+                        value="en-us"
+                        onChange={this.handleLanguageChange}
+                        checked={this.state.language === "en-us"}
+                      />
+                    </div>
                     <Button className="mt-3" type="submit">
                       Submit Edit
                     </Button>

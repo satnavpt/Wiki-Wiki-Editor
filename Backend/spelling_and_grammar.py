@@ -6,9 +6,9 @@ import re
 
 tool = None
 
-def init_tool():
+def init_tool(language):
     global tool
-    tool = language_tool_python.LanguageTool('en-GB')
+    tool = language_tool_python.LanguageTool(language)
 
 def spelling_and_grammar(text):
 

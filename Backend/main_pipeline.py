@@ -10,23 +10,27 @@ import glob
 
 main_bigram_dict = {}
 nlp = None
+current_language = 'en-gb'
 
 def init_pipeline():
     global main_bigram_dict 
     stage5.load_model()
-    stage1.init_tool()
+    global current_language
+    stage1.init_tool(current_language)
     main_bigram_dict = stage2.init_bigram_dict()
     global nlp
     nlp = spacy.load('en_core_web_sm')
     stage4.load_model()
 
     
-
-# text is the user input and force_down_pipeline is a setting that should be off by default
-# when on it will push the text down the pipeline regardless if errors are detected
 def run_pipeline(changed_text, original_text, language):
 
     problems_detected = []
+    
+    global current_language
+    if language != current_language:
+        stage1.init_tool(language)
+        current_language = language
 
     # stage 1 is spelling and grammar
     problems_detected.extend(stage1.spelling_and_grammar(changed_text))

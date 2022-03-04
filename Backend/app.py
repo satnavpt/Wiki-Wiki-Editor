@@ -22,6 +22,7 @@ def json_example():
         return "Request was not JSON", 400
 
 def getResponse(data):
+    print(data['language'])
     if len(data['text']) == 0:
         return []
     return getPipeline(data)
@@ -31,4 +32,4 @@ def getCharCount(data):
     return "received " + str(len(data)) + " characters"
 
 def getPipeline(data):
-    return main_pipeline.run_pipeline(data['text'], data['original_text'])
+    return main_pipeline.run_pipeline(data['text'], data['original_text'], data['language'])

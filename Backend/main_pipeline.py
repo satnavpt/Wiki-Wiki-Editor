@@ -6,8 +6,6 @@ import topic_modelling as stage4
 import predict_hate_speech as stage5
 import spacy
 
-import glob
-
 main_bigram_dict = {}
 nlp = None
 current_language = 'en-gb'
@@ -26,7 +24,7 @@ def init_pipeline():
 def run_pipeline(changed_text, original_text, language):
 
     problems_detected = []
-    
+
     global current_language
     if language != current_language:
         stage1.init_tool(language)

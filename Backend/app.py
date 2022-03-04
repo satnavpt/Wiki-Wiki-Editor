@@ -2,8 +2,6 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS
 import main_pipeline
-import sentence_coherence
-import multiprocessing
 
 app = Flask(__name__)
 CORS(app)

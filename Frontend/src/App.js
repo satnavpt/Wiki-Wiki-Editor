@@ -78,6 +78,9 @@ class App extends React.Component {
     var originalText = this.state.originalText;
     var lang = this.state.language;
 
+    // clear feedback first
+    this.setState({ feedback : "Loading..." });
+
     var xhr = new XMLHttpRequest();
     var url = "http://127.0.0.1:5000/";
     xhr.open("POST", url, true);

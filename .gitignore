@@ -11,3 +11,5 @@ Backend/__pycache__/main_pipeline.cpython-39.pyc
 DataSamples/nmf_60.pkl
 DataSamples/tfidf_60.pkl
 Backend/__pycache__/app.cpython-39.pyc
+DataSamples/misinformation_model_LSTM.h5
+DataSamples/one_hot_encoder

@@ -11,11 +11,34 @@ error_message = "This sentence seems to contain hateful content, consider changi
 # global model
 model = None
 
+#global profanity checker
+bad_words = {}
+
 # load model
 def load_model():
     global model
     opt = tf.saved_model.LoadOptions(experimental_io_device='/job:localhost')
     model = tf.keras.models.load_model('../DataSamples/model/', options=opt)
+
+def rot_13_convert(character):
+    chars = "abcdefghijklmnopqrstuvwxyz"
+    old_index = chars.find(character)
+    if old_index == -1:
+        return character
+
+    new_index = (old_index + 13) % 26
+    return chars[new_index]
+
+def rot_13_convert_word(word):
+    chars = [rot_13_convert(char) for char in word]
+    return ''.join(chars)
+
+def load_bad_words():
+    global bad_words
+    with open("../DataSamples/HateSpeechStage/encoded_bad_words.txt", "r") as f:
+        for line in f.readlines():
+            word = rot_13_convert_word(word)
+            bad_words.add(word)
 
 # get and return prediction
 def predict(input_data):
@@ -36,4 +59,4 @@ def predict(input_data):
 # return any sentences with high predicted hate speech
 def contains_hate_speech(input):
     predictions = predict(input)
-    return [error_message + '"' + prediction[1] + '"\n\n' for prediction in predictions if prediction[0] > cutoff]
+    return [f'{error_message} "{prediction[1]} "\n\n' for prediction in predictions if prediction[0] > cutoff]

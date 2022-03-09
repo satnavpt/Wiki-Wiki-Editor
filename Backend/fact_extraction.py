@@ -35,8 +35,7 @@ def generate_facts_from_indices(doc_for_facts, indices):
 
 
 # given text as a string, returns a list of strings that may be facts within it
-def extract_facts(text_data):
-    nlp = spacy.load("en_core_web_sm")  # done in pipeline initiation, not sure if needed
+def extract_facts(text_data, nlp):
     # apply pipeline to text
     text_doc = nlp(text_data)
     # get list of start and end indices of all noun chunks in text

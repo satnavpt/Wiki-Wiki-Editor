@@ -5,6 +5,7 @@ import sentiment_analysis as stage3
 import topic_modelling as stage4
 import predict_hate_speech as stage5
 import predict_fake_news as stage6
+import fact_extraction as stage6part2
 import spacy
 
 main_bigram_dict = {}
@@ -49,5 +50,6 @@ def run_pipeline(changed_text, original_text, language):
 
     # stage 6 is fake news detection
     problems_detected.extend(stage6.fake_news_detection(changed_text))
+    problems_detected.extend(stage6part2.extract_facts(changed_text, nlp))
 
     return problems_detected
